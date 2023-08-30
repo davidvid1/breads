@@ -6,18 +6,18 @@ const Bread = require('../models/bread.js')
 
 //create
 breads.post('/', (req, res) => {
-  if(req.body.hasGluten ==='on'){
-    req.body.hasGluten = true
-  } else{
-    req.body.image= false
+  if(!req.body.image) {
+      req.body.image = undefined 
   }
-  
-  req.body.image= undefined
-  breads.insertMany([req.body])
+  if(req.body.hasGluten === 'on') {
+    req.body.hasGluten = true
+  } else {
+    req.body.hasGluten = false
+  }
+  Bread.create(req.body)
   res.redirect('/breads')
-}
+})
 
-)
 
 
 
@@ -29,20 +29,45 @@ breads.post('/', (req, res) => {
 
 // INDEX
 breads.get('/', (req, res) => {
-  res.render('Index',
-    {
-      breads: Bread
-    }
-  )
-// res.send(Bread)
+  Bread.find()
+      .then(foundBreads => {
+          console.log(foundBreads)
+      })
+  // res.render('index',
+  //   {
+  //     breads: Bread,
+  //     title: 'Index Page'
+  //   }
+  // )
 })
 
 
 
 
+
 // SHOW
-breads.get('/:arrayIndex', (req, res) => {
-  res.send(Bread[req.params.arrayIndex])
+// SHOW
+breads.get('/:id', (req, res) => {
+  if (req.params.id) {
+      req.params.id = "64eeaa79cef0b2292ab03103"
+      Bread
+          .findById(req.params.id)
+          .then(bread => {
+              res.render(
+                  'Show',
+                  {
+                      bread: bread,
+                      id: req.params.id
+                  })
+          })
+          .catch(err => {
+              console.log(err)
+              res.render('NotFound')
+          })
+  } else {
+      res.render('NotFound')
+  }
+  //res.send(Bread[req.params.arrayIndex])
 })
 
 
