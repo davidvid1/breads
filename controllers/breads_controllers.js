@@ -70,6 +70,16 @@ breads.get('/:id', (req, res) => {
   //res.send(Bread[req.params.arrayIndex])
 })
 
+breads.get('/data/seed', (req, res) => {
+  Bread
+      .insertMany(breadSeed)
+      .then(createdBreads => {
+          res.redirect('/breads')
+      })
+})
+
+
+
 
 module.exports = breads
 

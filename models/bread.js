@@ -11,11 +11,14 @@ const breadSchema = new Schema({
 })
 
 // helper methods 
+// instance methods
 breadSchema.methods.getBakedBy = function(){
   return `${this.name} was baked with love by ${this.baker}`
 }
-
-
+/// static methods 
+breadSchema.methods.getBakedBy = function(bakermname){
+  return this.find({baker:name})
+}
 
 const Bread = mongoose.model('Bread', breadSchema)
 
