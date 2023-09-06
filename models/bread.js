@@ -10,6 +10,10 @@ const breadSchema = new Schema({
   image: { type: String, default: 'http://placehold.it/500x500.png' }
 })
 
+// helper methods 
+breadSchema.methods.getBakedBy = function(){
+  return `${this.name} was baked with love by ${this.baker}`
+}
 
 
 
