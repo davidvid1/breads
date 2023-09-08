@@ -18,34 +18,35 @@ breads.post('/', (req, res) => {
   res.redirect('/breads')
 })
 
-
-
-
-
-
-
-
-
-
-// INDEX
+// Index:
 breads.get('/', (req, res) => {
-  Bread.find()
+  Baker.find()
+    .then(foundBakers => {
+      Bread.find()
       .then(foundBreads => {
-          console.log(foundBreads)
+          res.render('index', {
+              breads: foundBreads,
+              bakers: foundBakers,
+              title: 'Index Page'
+          })
       })
-  // res.render('index',
-  //   {
-  //     breads: Bread,
-  //     title: 'Index Page'
-  //   }
-  // )
+    })
 })
 
 
 
 
 
-// SHOW
+
+
+
+
+                
+
+
+
+
+
 // SHOW
 breads.get('/:id', (req, res) => {
   if (req.params.id) {
