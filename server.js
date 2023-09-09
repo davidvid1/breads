@@ -10,7 +10,9 @@ mongoose
   .connect(process.env.MONGO_URI)
   .then(() => { console.log('connected to mongo: ', process.env.MONGO_URI) })
 
+
 // MIDDLEWARE
+app.use(express.static('public'))
 app.set('views', __dirname + '/views')
 app.set('view engine', 'jsx')
 app.engine('jsx', require('express-react-views').createEngine())
