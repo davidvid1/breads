@@ -28,6 +28,10 @@ app.get('/', (req, res) => {
   const breadsController = require('./controllers/breads_controllers.js')
   app.use('/breads', breadsController)
   
+// 404 Page
+app.get('*', (req, res) => {
+  res.send('404')
+})
 
 
 // LISTEN

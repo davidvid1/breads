@@ -4,7 +4,7 @@ const Bread = require('../models/bread.js')
 
 
 
-//create
+/*//create
 breads.post('/', (req, res) => {
   if(!req.body.image) {
       req.body.image = undefined 
@@ -16,7 +16,7 @@ breads.post('/', (req, res) => {
   }
   Bread.create(req.body)
   res.redirect('/breads')
-})
+})*/
 
 // Index:
 breads.get('/', (req, res) => {
@@ -33,29 +33,42 @@ breads.get('/', (req, res) => {
     })
 })
 
-
-
-
-
-
-  // SHOW
+// SHOW
 breads.get('/:arrayIndex', (req, res) => {
-  res.render('Show', {
-    bread: Bread[req.params.arrayIndex]
-  })
+  if (Bread[req.params.arrayIndex]) {
+    res.render('Show', {
+      bread:Bread[req.params.arrayIndex]
+    })
+  } else {
+    res.send('NotFound')
+  }
+
+
+
+
 
 
   //res.send(Bread[req.params.arrayIndex])
 })
-//
+/*//
 breads.get('/data/seed', (req, res) => {
   Bread
       .insertMany(breadSeed)
       .then(createdBreads => {
           res.redirect('/breads')
       })
-})
+})*/
 
+// CREATE
+breads.post('/', (req, res) => {
+  if(req.body.hasGluten === 'on') {
+    req.body.hasGluten = 'true'
+  } else {
+    req.body.hasGluten = 'false'
+  }
+  Bread.push(req.body)
+  res.send(Bread)
+})
 
 
 
