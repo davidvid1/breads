@@ -20,46 +20,42 @@ breads.post('/', (req, res) => {
 
 // Index:
 breads.get('/', (req, res) => {
-  Baker.find()
-    .then(foundBakers => {
-      Bread.find()
+  Bread.find()
       .then(foundBreads => {
           res.render('index', {
               breads: foundBreads,
-              bakers: foundBakers,
               title: 'Index Page'
           })
       })
-    })
 })
+
 
 // NEW
 breads.get('/new', (req, res) => {
   res.render('new')
 })
 
+// SHOW 
+breads.get('/:id', (req, res) => { 
+  if (req.params.id) { 
+    Bread 
+    .findById(req.params.id) 
+    .then(bread => { res.render(
+       'Show',
+        { bread: bread, id: req.params.id 
+        }) 
+      }) 
+      .catch(err => { 
+        console.log(err) 
+        res.render('NotFound')
+     }) 
+    } else {
+       res.render('NotFound')
+       }
+        //res.send(Bread[req.params.arrayIndex]) 
+      })
 
 
-// SHOW
-breads.get('/:arrayIndex', (req, res) => {
-  if (Bread[req.params.arrayIndex]) {
-    res.render('Show', {
-      bread:Bread[req.params.arrayIndex],
-      index: req.params.arrayIndex,
-    })
-  } else {
-    res.render('404')
-  }
-
-
-
-
-
-
-
-
-  //res.send(Bread[req.params.arrayIndex])
-})
 /*//
 breads.get('/data/seed', (req, res) => {
   Bread
@@ -84,8 +80,8 @@ breads.post('/', (req, res) => {
 })
 
 // DELETE
-breads.delete('/:indexArray', (req, res) => {
-  Bread.splice(req.params.indexArray, 1)
+breads.delete('/:id', (req, res) => {
+  Bread.splice(req.params.id, 1)
   res.status(303).redirect('/breads')
 })
 // EDIT
